@@ -27,6 +27,7 @@ from azure.identity import DefaultAzureCredential
 # Azure AI Search SDK
 from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
+from azure.core.exceptions import HttpResponseError
 
 # Load environment variables
 load_dotenv(override=True)
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 PROJECT_ENDPOINT = os.environ.get("AI_FOUNDRY_PROJECT_ENDPOINT")
 MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-5.4-mini")
 SEARCH_SERVICE_ENDPOINT = os.environ.get("SEARCH_SERVICE_ENDPOINT")
+SEARCH_ADMIN_KEY = os.environ.get("SEARCH_ADMIN_KEY")
 SEARCH_INDEX_NAME = os.environ.get("SEARCH_INDEX_NAME", "insurance-documents-index")
+SEARCH_SEMANTIC_CONFIG = os.environ.get("SEARCH_SEMANTIC_CONFIG", "insurance-semantic")
 
 # Policy code to friendly name mapping (for validation)
 KNOWN_POLICIES = {
@@ -49,6 +52,20 @@ KNOWN_POLICIES = {
     "HV-AUTO-001": "High-Value Vehicle Insurance",
     "MOTO-001": "Motorcycle Insurance",
 }
+
+
+def _collect_documents(results) -> list:
+    """Normalize Azure AI Search results into plain dictionaries."""
+    return [
+        {
+            "score": result.get("@search.score", 0),
+            "reranker_score": result.get("@search.reranker_score", 0),
+            "content": result.get("content", result.get("chunk", "")),
+            "title": result.get("title", ""),
+            "source": result.get("source", result.get("filepath", "")),
+        }
+        for result in results
+    ]
 
 
 def search_policy_document(policy_number: str) -> str:
@@ -71,30 +88,29 @@ def search_policy_document(policy_number: str) -> str:
                 "policy_number": policy_number,
             })
 
-        # Create search client using DefaultAzureCredential
+        # Prefer the admin key (matches how Challenge 1 builds the index); fall back to Entra ID
+        search_credential = (
+            AzureKeyCredential(SEARCH_ADMIN_KEY) if SEARCH_ADMIN_KEY else DefaultAzureCredential()
+        )
+
         search_client = SearchClient(
             endpoint=SEARCH_SERVICE_ENDPOINT,
             index_name=SEARCH_INDEX_NAME,
-            credential=DefaultAzureCredential(),
+            credential=search_credential,
         )
 
         # Hybrid search: use the policy code as the primary query
-        results = search_client.search(
-            search_text=policy_number,
-            top=3,
-            query_type="semantic",
-            semantic_configuration_name="default",
-        )
-
-        matched_docs = []
-        for result in results:
-            matched_docs.append({
-                "score": result.get("@search.score", 0),
-                "reranker_score": result.get("@search.reranker_score", 0),
-                "content": result.get("content", result.get("chunk", "")),
-                "title": result.get("title", ""),
-                "source": result.get("source", result.get("filepath", "")),
-            })
+        try:
+            results = search_client.search(
+                search_text=policy_number,
+                top=3,
+                query_type="semantic",
+                semantic_configuration_name=SEARCH_SEMANTIC_CONFIG,
+            )
+            matched_docs = _collect_documents(results)
+        except HttpResponseError as e:
+            logger.warning(f"Semantic search unavailable ({e.message.splitlines()[0]}); falling back to keyword search")
+            matched_docs = _collect_documents(search_client.search(search_text=policy_number, top=3))
 
         if not matched_docs:
             return json.dumps({
@@ -263,7 +279,7 @@ Return the structured JSON coverage summary."""
 
             response = openai_client.responses.create(
                 input=user_query,
-                extra_body={"agent": {"name": agent.name, "type": "agent_reference"}},
+                extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
             )
 
             response_text = response.output_text.strip()

@@ -307,7 +307,7 @@
       "tags": "[variables('tags')]",
       "sku": {
         "name": "GlobalStandard",
-        "capacity": 1
+        "capacity": 20
       },
       "properties": {
         "model": {
