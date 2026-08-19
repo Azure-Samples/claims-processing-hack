@@ -9,7 +9,7 @@ Welcome to Challenge 1! In this challenge, you'll build a comprehensive document
 In this challenge, we will create a complete document processing and vectorized search system that forms the backbone of our insurance AI agent ecosystem:
 
 - **Document Upload System**: Azure Blob Storage integration for secure document management
-- **Multimodal Processing Pipeline**: GPT-4-1-mini powered text and image processing capabilities  
+- **Multimodal Processing Pipeline**: gpt-5.4-mini powered text and image processing capabilities  
 - **OCR Extraction System**: Advanced text extraction from insurance claim images
 - **Vectorized Search Index**: Azure AI Search with integrated vectorization for semantic search
 - **Hybrid Search Capabilities**: Combined keyword, vector, and semantic search functionality
@@ -77,7 +77,7 @@ Azure Document Intelligence is particularly powerful for insurance scenarios whe
 
 ### <img src="images/openai-logo.png" alt="Multimodal Models" width="30" height="30" style="vertical-align: middle;"> Multimodal Models
 
-**GPT-4.1-mini (GPT-4-1-mini)**
+**gpt-5.4-mini**
 A powerful multimodal model that can process both text and images with high accuracy. This model excels at:
 - Understanding complex document layouts and formatting
 - Extracting structured information from unstructured documents
@@ -85,13 +85,13 @@ A powerful multimodal model that can process both text and images with high accu
 - Performing optical character recognition (OCR) on documents
 - Analyzing visual content alongside textual information
 
-GPT-4.1-mini offers an excellent balance between cost, speed, and performance for document processing tasks, making it ideal for processing both policy documents and visual claim evidence.
+gpt-5.4-mini offers an excellent balance between cost, speed, and performance for document processing tasks, making it ideal for processing both policy documents and visual claim evidence.
 
 ## Task 1 - Statement Processing with Multiple AI Approaches 
 The `statements_processing` folder contains advanced examples showcasing different AI approaches for processing insurance claim statements. This section demonstrates how to choose and implement the right model for your specific use case. It will also generate the markdown files needed for vectorization in the next part of the challenge:
 
 **GPT Statement Processing (`gpt_statement_processing.py`)**
-- Uses GPT-4-1-mini for intelligent statement analysis
+- Uses gpt-5.4-mini for intelligent statement analysis
 - Excels at understanding context and extracting nuanced information
 - Ideal for complex, unstructured claim narratives
 - Provides high-quality extraction with natural language understanding
@@ -115,7 +115,7 @@ This comparison helps you understand when to use each approach based on document
 
 Time to extract information from claim images! Please navigate to `scripts/imageprocessing.ipynb` for a detailed implementation of:
 - Processing insurance claim photos and accident documentation
-- Extracting text from images using GPT-4-1-mini vision capabilities
+- Extracting text from images using gpt-5.4-mini vision capabilities
 - Performing OCR on handwritten statements and invoices
 - Structuring extracted data for vectorization
 - Integrating visual claim evidence into Azure AI Search
@@ -126,7 +126,7 @@ This notebook showcases multimodal AI processing techniques for analyzing damage
 
 Time to process your insurance policy documents! Please navigate to `scripts/policiesprocessing.ipynb` for a comprehensive walkthrough on:
 - Setting up Azure Blob Storage for document management
-- Processing text-based policy documents using GPT-4-1-mini
+- Processing text-based policy documents using gpt-5.4-mini
 - Extracting structured information from policy markdown files
 - Creating vectorized embeddings for semantic search
 - Uploading processed documents to Azure AI Search
@@ -223,7 +223,7 @@ Congratulations! You've successfully built a comprehensive document processing a
 
 **Key Achievements:**
 - Processed insurance policy documents and created searchable embeddings with Azure AI Search
-- Extracted information from claim images using GPT-4-1-mini's multimodal capabilities
+- Extracted information from claim images using gpt-5.4-mini's multimodal capabilities
 - Implemented hybrid search combining keyword, vector, and semantic ranking
 - Explored multiple AI approaches (GPT, Mistral, Azure Document Intelligence) for different use cases
 - Established a knowledge base that AI agents can query using natural language

@@ -30,7 +30,7 @@ fi
 
 # Get resource group deployments, find deployments starting with 'Microsoft.Template' and sort them by timestamp
 echo "Getting the deployments in '$resourceGroupName'..."
-deploymentName=$(az deployment group list --resource-group $resourceGroupName --query "[?contains(name, 'Microsoft.Template') || contains(name, 'azuredeploy')].{name:name}[0].name" --output tsv)
+deploymentName=$(az deployment group list --resource-group $resourceGroupName --query "[?contains(name, 'Microsoft.Template') || contains(name, 'CustomDeployment')].{name:name}[0].name" --output tsv)
 if [ $? -ne 0 ]; then
     echo "Error occurred while fetching deployments. Exiting..."
     exit 1
@@ -351,13 +351,15 @@ echo "COSMOS_CONNECTION_STRING=\"$cosmosDbConnectionString\"" >> ../.env
 # For backward compatibility, also set OpenAI-style variables pointing to AI Foundry
 echo "AZURE_OPENAI_SERVICE_NAME=\"$aiFoundryHubName\"" >> ../.env
 echo "AZURE_OPENAI_ENDPOINT=\"$aiFoundryEndpoint\"" >> ../.env
+# Base URL for the Azure OpenAI v1 GA API - no api-version parameter required.
+echo "AZURE_OPENAI_BASE_URL=\"${aiFoundryEndpoint%/}/openai/v1/\"" >> ../.env
 echo "AZURE_OPENAI_KEY=\"$aiFoundryKey\"" >> ../.env
-echo "AZURE_OPENAI_DEPLOYMENT_NAME=\"gpt-4.1-mini\"" >> ../.env
-echo "AZURE_OPENAI_API_VERSION=\"2024-12-01-preview\"" >> ../.env
-echo "MODEL_DEPLOYMENT_NAME=\"gpt-4.1-mini\"" >> ../.env
+echo "AZURE_OPENAI_DEPLOYMENT_NAME=\"gpt-5.4-mini\"" >> ../.env
+echo "AZURE_OPENAI_EMBEDDING_DEPLOYMENT=\"text-embedding-3-large\"" >> ../.env
+echo "MODEL_DEPLOYMENT_NAME=\"gpt-5.4-mini\"" >> ../.env
 
 # Mistral Document AI deployment
-echo "MISTRAL_DOCUMENT_AI_DEPLOYMENT_NAME=\"mistral-document-ai-2505\"" >> ../.env
+echo "MISTRAL_DOCUMENT_AI_DEPLOYMENT_NAME=\"mistral-document-ai-2512\"" >> ../.env
 echo "MISTRAL_DOCUMENT_AI_ENDPOINT=\"$aiFoundryEndpoint\"" >> ../.env
 echo "MISTRAL_DOCUMENT_AI_KEY=\"$aiFoundryKey\"" >> ../.env
 

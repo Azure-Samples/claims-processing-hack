@@ -1,8 +1,11 @@
-azure-ai-projects>=1.0.0b6
-azure-identity
-python-dotenv
-httpx
-mcp
-fastapi
-uvicorn[standard]
-python-multipart
+# Runtime dependencies for the Claims Processing API container.
+# Keep in sync with the root requirements.txt.
+azure-ai-projects>=2.3.0,<2.4.0
+azure-identity>=1.25.3,<2
+openai>=2.25.0,<3
+python-dotenv>=1.1.0,<2
+httpx>=0.28.1,<1
+mcp>=2.0.0,<3
+fastapi>=0.141.1,<1
+uvicorn[standard]>=0.42.0,<1
+python-multipart>=0.0.20

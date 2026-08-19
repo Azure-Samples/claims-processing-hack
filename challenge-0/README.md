@@ -26,6 +26,22 @@ Please select your forked repository from the dropdown and, if necessary, adjust
 > [!NOTE]
 > If GitHub Codespaces is not enabled in your organization, you can enable it by following the instructions [here](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/enabling-or-disabling-github-codespaces-for-your-organization), or, if you cannot change your GitHub organization's settings, create a free personal GitHub account [here](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home). The Github Free Plan includes 120 core hours per month, equivalent to 60 hours on a 2-core machine, along with 15 GB of storage.
 
+### 1.2.1 Create the Python environment
+
+All challenges share a single virtual environment at the repository root. Python **3.10 or later** is required (3.12/3.13 recommended).
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Select `.venv` as the kernel when you open the Challenge 1 notebooks in VS Code.
+
+> [!NOTE]
+> The Microsoft Agent Framework is now generally available, so the `--pre` flag is no longer needed. The repo targets the Microsoft Foundry SDK `azure-ai-projects` 2.x, which is **not** compatible with the 1.x "Foundry classic" API.
+
 
 ## 1.3 Resource Deployment Guide
 The first step on this hackathon will be to create the resources we will use throughout the day. You can deploy using either the one-click button or manual method below.
@@ -72,7 +88,15 @@ This script will:
 
 ## 1.6 Verify `.env` setup
 
-Review the generated `.env` file to ensure all values are correct. The script creates this file from `.env.sample` with populated Azure resource values. If the file isn't created automatically, copy `.env.sample` to `.env` and populate values manually from the Azure Portal.
+Review the generated `.env` file to ensure all values are correct. If the file isn't created automatically, copy `.env.example` from the repository root to `.env` and populate values manually from the Azure Portal.
+
+The deployment provisions these model deployments in Microsoft Foundry:
+
+| Deployment | Purpose |
+| --- | --- |
+| `gpt-5.4-mini` | Chat/reasoning model for all agents and multimodal extraction |
+| `text-embedding-3-large` | Embeddings for Azure AI Search integrated vectorization (3072 dimensions) |
+| `mistral-document-ai-2512` | Mistral Document AI OCR |
 
 
 > [!CAUTION]

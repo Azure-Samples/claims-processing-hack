@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 WORKDIR /app
 
@@ -13,6 +13,10 @@ COPY challenge-4/api_server.py .
 # Add challenge-2 agents for OCR agent
 RUN mkdir -p /app/challenge-2/agents
 COPY challenge-2/agents/ocr_agent.py /app/challenge-2/agents/
+
+# Run as a non-root user
+RUN useradd --create-home --uid 10001 appuser && chown -R appuser /app
+USER appuser
 
 # Expose API port
 EXPOSE 8080

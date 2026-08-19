@@ -55,7 +55,7 @@ python ocr_agent.py ../../challenge-0/data/statements/crash1_front.jpeg
 
 ### Task 2: Run the JSON Structuring Agent
 
-The JSON Structuring Agent converts raw OCR text into structured claim data using GPT-4.1-mini.
+The JSON Structuring Agent converts raw OCR text into structured claim data using gpt-5.4-mini.
 
 ```bash
 cd challenge-2/agents
@@ -66,7 +66,7 @@ python json_structuring_agent.py ../ocr_results/crash1_front_ocr_result.json
 
 **What it does:**
 - Reads the OCR output from Task 1
-- Uses GPT-4.1-mini to parse and structure the text
+- Uses gpt-5.4-mini to parse and structure the text
 - Extracts key claim fields (vehicle info, damage assessment, incident details)
 - Returns well-structured JSON ready for downstream processing
 
@@ -117,7 +117,7 @@ The OCR Agent is responsible for extracting raw text from images and documents u
 The JSON Structuring Agent takes raw OCR text and converts it into a standardized, structured JSON format suitable for claims processing.
 
 **Technology Stack:**
-- **Model**: GPT-4.1-mini via Azure AI Foundry
+- **Model**: gpt-5.4-mini via Azure AI Foundry
 - **SDK**: Azure AI Projects SDK with `PromptAgentDefinition`
 - **Input**: OCR result JSON or raw text file
 - **Output**: Structured claim data JSON
@@ -128,7 +128,7 @@ The JSON Structuring Agent takes raw OCR text and converts it into a standardize
 
 2. **Vehicle Side Detection**: Automatically detects if the image shows the front or back of a vehicle to apply appropriate extraction rules
 
-3. **Intelligent Structuring**: Uses GPT-4.1-mini with specialized prompts to extract and categorize information into predefined fields:
+3. **Intelligent Structuring**: Uses gpt-5.4-mini with specialized prompts to extract and categorize information into predefined fields:
    - Vehicle information (make, model, year, VIN)
    - Damage assessment (severity, affected areas)
    - Incident details (date, location, description)
@@ -169,7 +169,7 @@ The two agents work together in a sequential pipeline:
 ```
 ┌─────────────────┐    ┌──────────────────────┐    ┌─────────────────────┐
 │  Claim Image    │───▶│     OCR Agent        │───▶│  JSON Structuring   │
-│  (JPEG/PNG/PDF) │    │  (Mistral Doc AI)    │    │  Agent (GPT-4.1)    │
+│  (JPEG/PNG/PDF) │    │  (Mistral Doc AI)    │    │  Agent (gpt-5.4-mini)│
 └─────────────────┘    └──────────────────────┘    └─────────────────────┘
                               │                            │
                               ▼                            ▼
@@ -195,7 +195,7 @@ Both agents use the Azure AI Projects SDK with `PromptAgentDefinition` to create
 ### Multi-Model Architecture
 This challenge demonstrates using different AI models for different tasks:
 - **Mistral Document AI**: Specialized for OCR and document understanding
-- **GPT-4.1-mini**: Optimized for text parsing and structured output generation
+- **gpt-5.4-mini**: Optimized for text parsing and structured output generation
 
 ### Pipeline Design
 The agents are designed to be modular and composable, allowing you to:

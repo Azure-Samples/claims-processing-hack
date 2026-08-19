@@ -3,7 +3,8 @@ import os
 import json
 import base64
 from dotenv import load_dotenv
-from openai import AzureOpenAI
+from openai import OpenAI
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from collections import defaultdict
 
 # Load environment variables
@@ -16,18 +17,29 @@ STATEMENTS_OUTPUT_LOCATION = '../output/gpt/'
 # Azure OpenAI credentials
 AZURE_OPENAI_ENDPOINT = os.getenv('AZURE_OPENAI_ENDPOINT')
 AZURE_OPENAI_KEY = os.getenv('AZURE_OPENAI_KEY')
-AZURE_OPENAI_DEPLOYMENT_NAME = os.getenv('AZURE_OPENAI_DEPLOYMENT_NAME')
-AZURE_OPENAI_API_VERSION = os.getenv('AZURE_OPENAI_API_VERSION')
+AZURE_OPENAI_DEPLOYMENT_NAME = os.getenv('AZURE_OPENAI_DEPLOYMENT_NAME', 'gpt-5.4-mini')
+# v1 GA API: the endpoint carries the version, so no api-version parameter is needed.
+AZURE_OPENAI_BASE_URL = os.getenv(
+    'AZURE_OPENAI_BASE_URL',
+    f"{AZURE_OPENAI_ENDPOINT.rstrip('/')}/openai/v1/" if AZURE_OPENAI_ENDPOINT else None,
+)
 
-# Initialize Azure OpenAI Client
-openai_client = AzureOpenAI(
-    azure_endpoint=AZURE_OPENAI_ENDPOINT,
-    api_key=AZURE_OPENAI_KEY,
-    api_version=AZURE_OPENAI_API_VERSION
+# Initialize the OpenAI client against the Azure OpenAI v1 endpoint.
+# Prefer Microsoft Entra ID; fall back to a key only if one is supplied.
+if AZURE_OPENAI_KEY:
+    credential_source = AZURE_OPENAI_KEY
+else:
+    credential_source = get_bearer_token_provider(
+        DefaultAzureCredential(), "https://ai.azure.com/.default"
+    )
+
+openai_client = OpenAI(
+    base_url=AZURE_OPENAI_BASE_URL,
+    api_key=credential_source,
 )
 
 print(f"✅ Configuration loaded:")
-print(f"   OpenAI API Version: {AZURE_OPENAI_API_VERSION}")
+print(f"   OpenAI base URL: {AZURE_OPENAI_BASE_URL}")
 print(f"   OpenAI Deployment: {AZURE_OPENAI_DEPLOYMENT_NAME}")
 
 # Function to encode image to base64
@@ -35,9 +47,9 @@ def encode_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
 
-# Function to perform OCR using GPT-4.1-mini model
-def ocr_using_gpt4(front_image_path, back_image_path):
-    """Process front and back images using GPT-4.1-mini"""
+# Function to perform OCR using the chat model
+def ocr_using_gpt(front_image_path, back_image_path):
+    """Process front and back images using the configured multimodal model"""
     front_base64 = encode_image(front_image_path)
     back_base64 = encode_image(back_image_path)
     
@@ -74,7 +86,7 @@ def ocr_using_gpt4(front_image_path, back_image_path):
                 ]
             }
         ],
-        max_tokens=2000
+        max_completion_tokens=2000
     )
     
     return response.choices[0].message.content
@@ -102,8 +114,8 @@ def group_claims_by_number(file_list):
     return claims
 
 # Main processing function
-def process_statements_with_gpt4():
-    """Process all statement images from local folder using GPT-4.1-mini Model"""
+def process_statements_with_gpt():
+    """Process all statement images from local folder using the configured model"""
        
 
     # List all local image files and group them by claim number
@@ -115,37 +127,37 @@ def process_statements_with_gpt4():
     grouped_claims = group_claims_by_number(image_files)
     
     # Store results
-    gpt4_results = {}
+    gpt_results = {}
     
     # Process each claim (front + back together)
     for claim_number, images in grouped_claims.items():
         if 'front' in images and 'back' in images:
-            print(f"Processing {claim_number} with GPT-4.1-mini...")
+            print(f"Processing {claim_number} with {AZURE_OPENAI_DEPLOYMENT_NAME}...")
 
             # Build full paths for front and back images from local folder
             front_path = os.path.join(STATEMENTS_IMAGE_FOLDER, images["front"])
             back_path = os.path.join(STATEMENTS_IMAGE_FOLDER, images["back"])
 
             # Perform OCR on both images together
-            result = ocr_using_gpt4(front_path, back_path)
-            gpt4_results[claim_number] = result
+            result = ocr_using_gpt(front_path, back_path)
+            gpt_results[claim_number] = result
             
             print(f"✓ Completed {claim_number}")
     
-    print(f"\n✅ Processed {len(gpt4_results)} claims with GPT-4.1-mini")
+    print(f"\n✅ Processed {len(gpt_results)} claims with {AZURE_OPENAI_DEPLOYMENT_NAME}")
 
     # Ensure output directory exists and save results to file there
     os.makedirs(STATEMENTS_OUTPUT_LOCATION, exist_ok=True)
     output_file = os.path.join(
-        STATEMENTS_OUTPUT_LOCATION, 'gpt4_statement_results.json'
+        STATEMENTS_OUTPUT_LOCATION, 'gpt_statement_results.json'
     )
     with open(output_file, 'w') as f:
-        json.dump(gpt4_results, f, indent=2)
+        json.dump(gpt_results, f, indent=2)
 
     print(f"💾 Results saved to {output_file}")
     
-    return gpt4_results
+    return gpt_results
 
 if __name__ == "__main__":
-    results = process_statements_with_gpt4()
+    results = process_statements_with_gpt()
     print(f"\n📊 Total claims processed: {len(results)}")

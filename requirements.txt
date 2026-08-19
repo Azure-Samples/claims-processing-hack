@@ -1,30 +1,60 @@
-# Microsoft Agent Framework (requires --pre flag)
-agent-framework-azure-ai
-agent-framework-azure-ai-search
-azure-ai-projects>=1.0.0b4
+# ---------------------------------------------------------------------------
+# Claims Processing Hackathon - full workspace dependencies (challenges 0-6)
+#
+# Requires Python 3.10+ (3.12 / 3.13 recommended).
+#
+#   python3 -m venv .venv
+#   source .venv/bin/activate        # Windows: .venv\Scripts\activate
+#   pip install -r requirements.txt
+# ---------------------------------------------------------------------------
 
-# Azure dependencies
-azure-cosmos>=4.5.0
-azure-identity>=1.15.0
-azure-search-documents>=11.7.0b2
+# --- Microsoft Foundry SDK -------------------------------------------------
+# azure-ai-projects 2.x targets Foundry (new) and is NOT compatible with the
+# 1.x "Foundry classic" API surface. The <2.4.0 ceiling is imposed by
+# agent-framework-foundry; drop it if you remove the Agent Framework packages.
+azure-ai-projects>=2.3.0,<2.4.0
+azure-identity>=1.25.3,<2
 
-# Azure AI Tracing & Monitoring
-azure-ai-inference[tracing]>=1.0.0b6
-azure-monitor-opentelemetry>=1.2.0
-opentelemetry-api>=1.20.0
-opentelemetry-sdk>=1.20.0
-opentelemetry-exporter-otlp-proto-grpc>=1.20.0
+# --- Microsoft Agent Framework --------------------------------------------
+# Stable since 1.0.0 - the `--pre` flag is no longer required.
+# `agent-framework-azure-ai` is retired: Foundry clients now ship in
+# `agent-framework-foundry` under the `agent_framework.foundry` namespace
+# (FoundryChatClient / FoundryAgent / FoundryLocalClient).
+agent-framework-core>=1.14.0,<2
+agent-framework-foundry>=1.11.0,<2
+agent-framework-azure-ai-search>=1.0.0b260813
 
-# Data handling
-dataclasses-json>=0.6.0
+# --- OpenAI SDK ------------------------------------------------------------
+# Used directly for the Azure OpenAI v1 API and via project.get_openai_client().
+# Capped at <3 by agent-framework-openai (a dependency of -foundry).
+openai>=2.25.0,<3
 
-# Development dependencies
-python-dotenv>=1.0.0
-ipykernel
+# --- Azure data + search services -----------------------------------------
+azure-search-documents>=12.0.0,<13
+azure-storage-blob>=12.30.0,<13
+azure-cosmos>=4.16.3,<5
+azure-ai-documentintelligence>=1.0.2,<2
 
-pytest-asyncio>=1.3.0
+# --- Observability (challenge 3) ------------------------------------------
+azure-monitor-opentelemetry>=1.8.9,<2
+opentelemetry-api>=1.39.0,<2
+opentelemetry-sdk>=1.39.0,<2
+opentelemetry-exporter-otlp-proto-grpc>=1.39.0,<2
+azure-ai-evaluation>=1.18.3,<2
 
-# Streamlit UI for Claims Processing
-streamlit>=1.28.0
-httpx>=0.25.0
-python-dotenv>=1.0.0
+# --- API server + MCP (challenge 4) ---------------------------------------
+fastapi>=0.141.1,<1
+uvicorn[standard]>=0.42.0,<1
+python-multipart>=0.0.20
+httpx>=0.28.1,<1
+mcp>=2.0.0,<3
+
+# --- Streamlit UI (challenge 5) -------------------------------------------
+streamlit>=1.61.1,<2
+
+# --- Notebooks + tooling ---------------------------------------------------
+python-dotenv>=1.1.0,<2
+ipykernel>=7.3.0
+ipywidgets>=8.1.5
+pytest>=9.1.1
+pytest-asyncio>=1.4.0

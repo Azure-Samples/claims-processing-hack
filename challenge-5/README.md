@@ -50,6 +50,11 @@ In this challenge, you will create:
 
 ```bash
 cd challenge-5
+
+# Activate the workspace virtual environment created in Challenge 0
+source ../.venv/bin/activate    # Windows: ..\.venv\Scripts\activate
+
+# Or install just this challenge's dependencies
 pip install -r requirements.txt
 ```
 

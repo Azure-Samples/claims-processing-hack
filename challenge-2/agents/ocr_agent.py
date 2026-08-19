@@ -93,7 +93,7 @@ def extract_text_with_ocr(image_path: str) -> str:
         # Get Mistral Document AI configuration
         mistral_endpoint = os.getenv('MISTRAL_DOCUMENT_AI_ENDPOINT')
         mistral_api_key = os.getenv('MISTRAL_DOCUMENT_AI_KEY')
-        mistral_model = os.getenv('MISTRAL_DOCUMENT_AI_DEPLOYMENT_NAME', 'mistral-document-ai-2505')
+        mistral_model = os.getenv('MISTRAL_DOCUMENT_AI_DEPLOYMENT_NAME', 'mistral-document-ai-2512')
         
         if not mistral_endpoint or not mistral_api_key:
             return json.dumps({
@@ -228,11 +228,17 @@ def main():
     print("=== OCR Agent with Azure AI Foundry ===\n")
     
     try:
+        # Resolve paths relative to the repository so this works outside Codespaces
+        repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        default_image_path = os.path.join(
+            repo_root, "challenge-0", "data", "statements", "crash1_front.jpeg"
+        )
+
         # Get image path from CLI args or use default
-        test_image_path = sys.argv[1] if len(sys.argv) > 1 else "/workspaces/claims-processing-hack/challenge-0/data/statements/crash1_front.jpeg"
-        
+        test_image_path = sys.argv[1] if len(sys.argv) > 1 else default_image_path
+
         # Create output directory for OCR results
-        output_dir = "/workspaces/claims-processing-hack/challenge-2/ocr_results"
+        output_dir = os.path.join(repo_root, "challenge-2", "ocr_results")
         os.makedirs(output_dir, exist_ok=True)
         
         # Create AI Project Client

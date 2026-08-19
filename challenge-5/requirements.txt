@@ -1,4 +1,4 @@
 # Streamlit UI for Claims Processing
-streamlit>=1.28.0
-httpx>=0.25.0
-python-dotenv>=1.0.0
+streamlit>=1.61.1,<2
+httpx>=0.28.1,<1
+python-dotenv>=1.1.0,<2

@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 PROJECT_ENDPOINT = os.environ.get("AI_FOUNDRY_PROJECT_ENDPOINT")
-MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-4o-mini")
+MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-5.4-mini")
 
 
 def get_agent_instructions() -> str:
@@ -124,7 +124,6 @@ def validate_coverage(claim_data: dict, policy_data: dict = None, project_client
                 definition=PromptAgentDefinition(
                     model=MODEL_DEPLOYMENT_NAME,
                     instructions=get_agent_instructions(),
-                    temperature=0.1,
                 ),
             )
 

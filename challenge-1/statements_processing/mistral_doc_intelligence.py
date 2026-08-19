@@ -64,7 +64,7 @@ def get_mistral_doc_ai_client():
     mistral_endpoint = os.getenv("MISTRAL_DOCUMENT_AI_ENDPOINT")
     mistral_api_key = os.getenv("MISTRAL_DOCUMENT_AI_KEY")
     mistral_model = os.getenv(
-        "MISTRAL_DOCUMENT_AI_DEPLOYMENT_NAME", "mistral-document-ai-2505"
+        "MISTRAL_DOCUMENT_AI_DEPLOYMENT_NAME", "mistral-document-ai-2512"
     )
 
     # Endpoint format: https://<resource>.cognitiveservices.azure.com/providers/mistral/azure/ocr

@@ -92,7 +92,10 @@ Install dependencies and test the workflow:
 ```bash
 cd challenge-4
 
-# Install Python dependencies
+# Activate the workspace virtual environment created in Challenge 0
+source ../.venv/bin/activate    # Windows: ..\.venv\Scripts\activate
+
+# Or install just this challenge's dependencies
 pip install -r requirements.txt
 
 # Test the workflow with a sample image
@@ -144,7 +147,7 @@ python test_api_client.py
 Open and review [`Dockerfile`](Dockerfile):
 
 **Key aspects**:
-- Uses Python 3.11 slim base image
+- Uses Python 3.13 slim base image
 - Installs dependencies from `requirements.txt`
 - Copies application files and OCR agent scripts
 - Exposes port 8080

@@ -32,7 +32,45 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 ENDPOINT = os.environ.get("AI_FOUNDRY_PROJECT_ENDPOINT")
-MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME")
+MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-5.4-mini")
+
+AGENT_NAME = "WorkflowOCRTextExtractionAgent"
+AGENT_INSTRUCTIONS = """You are an expert OCR text extraction assistant specialized in extracting and structuring text content from JPEG images.
+
+Your task:
+1. Receive OCR text extracted from documents
+2. Extract ALL visible text and structure it into a clean, organized JSON format
+3. Focus solely on text extraction - do not analyze any visual elements or pictures
+4. Structure the text into valid JSON format with these fields:
+   - document_type: form | letter | receipt | invoice | certificate | report | handwritten | mixed | other
+   - extracted_text: {raw_text, text_blocks[], structured_fields}
+   - text_quality: {overall_legibility, issues[]}
+   - confidence: high | medium | low
+5. Return ONLY valid JSON, no markdown or explanations
+
+Always return properly formatted JSON."""
+
+# Creating an agent version per request would accumulate versions in the project,
+# so the version is created once on first use and reused afterwards.
+_agent_lock = asyncio.Lock()
+_agent_name: str | None = None
+
+
+async def _ensure_agent(project_client) -> str:
+    """Create the extraction agent version once and return its name."""
+    global _agent_name
+    async with _agent_lock:
+        if _agent_name is None:
+            agent = project_client.agents.create_version(
+                agent_name=AGENT_NAME,
+                definition=PromptAgentDefinition(
+                    model=MODEL_DEPLOYMENT_NAME,
+                    instructions=AGENT_INSTRUCTIONS,
+                ),
+            )
+            logger.info(f"Created OCR Text Extraction Agent: {agent.name} (version {agent.version})")
+            _agent_name = agent.name
+    return _agent_name
 
 
 async def process_claim_workflow(image_path: str) -> dict:
@@ -71,32 +109,9 @@ async def process_claim_workflow(image_path: str) -> dict:
         endpoint=ENDPOINT,
         credential=DefaultAzureCredential(),
     ) as project_client:
-        
-        # Create OCR Text Extraction agent
-        agent = project_client.agents.create_version(
-            agent_name="WorkflowOCRTextExtractionAgent",
-            definition=PromptAgentDefinition(
-                model=MODEL_DEPLOYMENT_NAME,
-                instructions="""You are an expert OCR text extraction assistant specialized in extracting and structuring text content from JPEG images.
 
-Your task:
-1. Receive OCR text extracted from documents
-2. Extract ALL visible text and structure it into a clean, organized JSON format
-3. Focus solely on text extraction - do not analyze any visual elements or pictures
-4. Structure the text into valid JSON format with these fields:
-   - document_type: form | letter | receipt | invoice | certificate | report | handwritten | mixed | other
-   - extracted_text: {raw_text, text_blocks[], structured_fields}
-   - text_quality: {overall_legibility, issues[]}
-   - confidence: high | medium | low
-5. Return ONLY valid JSON, no markdown or explanations
+        agent_name = await _ensure_agent(project_client)
 
-Always return properly formatted JSON.""",
-                temperature=0.1,
-            ),
-        )
-        
-        logger.info(f"Created OCR Text Extraction Agent: {agent.name}")
-        
         # Get OpenAI client for agent responses
         openai_client = project_client.get_openai_client()
         
@@ -114,7 +129,7 @@ Return only the structured JSON object with all extracted text."""
         # Get response from agent
         response = openai_client.responses.create(
             input=user_query,
-            extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+            extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
         )
         
         # Extract the JSON from response
