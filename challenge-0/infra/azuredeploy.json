@@ -285,7 +285,7 @@
       "name": "[format('{0}/{1}', variables('aiFoundryName'), 'text-embedding-3-large')]",
       "tags": "[variables('tags')]",
       "sku": {
-        "capacity": 200,
+        "capacity": 100,
         "name": "GlobalStandard"
       },
       "properties": {
@@ -308,7 +308,7 @@
       "tags": "[variables('tags')]",
       "sku": {
         "name": "GlobalStandard",
-        "capacity": 20
+        "capacity": 5
       },
       "properties": {
         "model": {
