@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 OCR Text Extraction Agent - Extracts and structures text from JPEG images.
-Uses gpt-5.4-mini to parse OCR results and create structured text data.
+Uses gpt-4.1-mini to parse OCR results and create structured text data.
 Focuses solely on text extraction - does not analyze visual content like car damage.
 
 Usage:
@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 project_endpoint = os.environ.get("AI_FOUNDRY_PROJECT_ENDPOINT")
-model_deployment_name = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-5.4-mini")
+model_deployment_name = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-4.1-mini")
 
 
 def get_agent_instructions() -> str:

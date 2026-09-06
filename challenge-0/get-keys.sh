@@ -354,9 +354,9 @@ echo "AZURE_OPENAI_ENDPOINT=\"$aiFoundryEndpoint\"" >> ../.env
 # Base URL for the Azure OpenAI v1 GA API - no api-version parameter required.
 echo "AZURE_OPENAI_BASE_URL=\"${aiFoundryEndpoint%/}/openai/v1/\"" >> ../.env
 echo "AZURE_OPENAI_KEY=\"$aiFoundryKey\"" >> ../.env
-echo "AZURE_OPENAI_DEPLOYMENT_NAME=\"gpt-5.4-mini\"" >> ../.env
+echo "AZURE_OPENAI_DEPLOYMENT_NAME=\"gpt-4.1-mini\"" >> ../.env
 echo "AZURE_OPENAI_EMBEDDING_DEPLOYMENT=\"text-embedding-3-large\"" >> ../.env
-echo "MODEL_DEPLOYMENT_NAME=\"gpt-5.4-mini\"" >> ../.env
+echo "MODEL_DEPLOYMENT_NAME=\"gpt-4.1-mini\"" >> ../.env
 
 # Mistral Document AI deployment
 echo "MISTRAL_DOCUMENT_AI_DEPLOYMENT_NAME=\"mistral-document-ai-2512\"" >> ../.env

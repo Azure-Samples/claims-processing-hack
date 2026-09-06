@@ -17,7 +17,7 @@ STATEMENTS_OUTPUT_LOCATION = '../output/gpt/'
 # Azure OpenAI credentials
 AZURE_OPENAI_ENDPOINT = os.getenv('AZURE_OPENAI_ENDPOINT')
 AZURE_OPENAI_KEY = os.getenv('AZURE_OPENAI_KEY')
-AZURE_OPENAI_DEPLOYMENT_NAME = os.getenv('AZURE_OPENAI_DEPLOYMENT_NAME', 'gpt-5.4-mini')
+AZURE_OPENAI_DEPLOYMENT_NAME = os.getenv('AZURE_OPENAI_DEPLOYMENT_NAME', 'gpt-4.1-mini')
 # v1 GA API: the endpoint carries the version, so no api-version parameter is needed.
 AZURE_OPENAI_BASE_URL = os.getenv(
     'AZURE_OPENAI_BASE_URL',

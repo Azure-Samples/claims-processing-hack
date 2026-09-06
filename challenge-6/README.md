@@ -26,8 +26,8 @@ Crashes 1 and 3 reference a **liability-only** policy — which explicitly **doe
 ┌──────────────────────┐     ┌─────────────────────┐     ┌──────────────────────────┐
 │  Structured Claim    │────▶│  Policy Matching     │────▶│  Coverage Validation     │
 │  JSON (from Ch. 2)   │     │  Agent               │     │  Agent                   │
-│                      │     │  (Azure AI Search +   │     │  (gpt-5.4-mini)          │
-│  • policy_number     │     │   gpt-5.4-mini)      │     │                          │
+│                      │     │  (Azure AI Search +   │     │  (gpt-4.1-mini)          │
+│  • policy_number     │     │   gpt-4.1-mini)      │     │                          │
 │  • damage_desc       │     │                      │     │  Output:                 │
 │  • claim_request     │     │  Output:             │     │  • coverage_decision     │
 └──────────────────────┘     │  • matched policy    │     │  • applicable_deductible │
@@ -71,7 +71,7 @@ Open and review [`agents/policy_matching_agent.py`](agents/policy_matching_agent
 
 **Technology Stack:**
 - **Azure AI Search SDK** for hybrid search (keyword + vector + semantic reranking)
-- **gpt-5.4-mini** via Azure AI Foundry for summarizing policy coverage into structured format
+- **gpt-4.1-mini** via Azure AI Foundry for summarizing policy coverage into structured format
 - **Azure AI Projects SDK** with `PromptAgentDefinition`
 
 #### 1.2 Run the Policy Matching Agent
@@ -153,8 +153,8 @@ Open [`validation_workflow.py`](validation_workflow.py):
 
 ```mermaid
 flowchart TD
-    A["📄 Structured Claim JSON\n(from Challenge 2)"] --> B["🔍 Policy Matching Agent\n(Azure AI Search + gpt-5.4-mini)"]
-    B -->|"Matched policy:\n• policy name & code\n• coverage types\n• limits & deductibles\n• exclusions"| C["✅ Coverage Validation Agent\n(gpt-5.4-mini)"]
+    A["📄 Structured Claim JSON\n(from Challenge 2)"] --> B["🔍 Policy Matching Agent\n(Azure AI Search + gpt-4.1-mini)"]
+    B -->|"Matched policy:\n• policy name & code\n• coverage types\n• limits & deductibles\n• exclusions"| C["✅ Coverage Validation Agent\n(gpt-4.1-mini)"]
     C --> D{"Coverage Decision"}
     D -->|APPROVED| E["✅ Claim Covered\n• applicable coverage\n• deductible amount\n• coverage limit"]
     D -->|DENIED| F["❌ Claim Denied\n• exclusions triggered\n• reasoning"]
@@ -165,7 +165,7 @@ flowchart TD
 
     subgraph "Policy Matching Agent"
         B1["Search AI Search index\nby policy_number"] --> B2["Retrieve policy document"]
-        B2 --> B3["Extract coverage details\nvia gpt-5.4-mini"]
+        B2 --> B3["Extract coverage details\nvia gpt-4.1-mini"]
     end
 
     subgraph "Coverage Validation Agent"
@@ -216,7 +216,7 @@ Extend the Challenge 4 API server to include policy validation as an optional st
 ## Key Concepts Demonstrated
 
 ### Retrieval-Augmented Generation (RAG) for Policy Lookup
-The Policy Matching Agent uses Azure AI Search to retrieve relevant policy documents, then uses gpt-5.4-mini to extract and summarize the coverage details. This is a practical RAG pattern — the LLM's response is grounded in the actual policy document, not hallucinated coverage terms.
+The Policy Matching Agent uses Azure AI Search to retrieve relevant policy documents, then uses gpt-4.1-mini to extract and summarize the coverage details. This is a practical RAG pattern — the LLM's response is grounded in the actual policy document, not hallucinated coverage terms.
 
 ### Multi-Agent Decision Pipeline
 This challenge extends the pipeline from Challenge 2:

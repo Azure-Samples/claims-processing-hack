@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 ENDPOINT = os.environ.get("AI_FOUNDRY_PROJECT_ENDPOINT")
-MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-5.4-mini")
+MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-4.1-mini")
 
 AGENT_NAME = "WorkflowOCRTextExtractionAgent"
 AGENT_INSTRUCTIONS = """You are an expert OCR text extraction assistant specialized in extracting and structuring text content from JPEG images.

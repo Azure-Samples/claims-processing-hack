@@ -4,7 +4,7 @@ Policy Matching Agent - Retrieves insurance policy documents from Azure AI Searc
 based on the policy number found in structured claim data.
 
 Uses Azure AI Search (hybrid: keyword + vector + semantic) to find the matching
-policy document, then gpt-5.4-mini to extract and summarize coverage details.
+policy document, then gpt-4.1-mini to extract and summarize coverage details.
 
 Usage:
     python policy_matching_agent.py <structured_claim.json>
@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 PROJECT_ENDPOINT = os.environ.get("AI_FOUNDRY_PROJECT_ENDPOINT")
-MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-5.4-mini")
+MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-4.1-mini")
 SEARCH_SERVICE_ENDPOINT = os.environ.get("SEARCH_SERVICE_ENDPOINT")
 SEARCH_ADMIN_KEY = os.environ.get("SEARCH_ADMIN_KEY")
 SEARCH_INDEX_NAME = os.environ.get("SEARCH_INDEX_NAME", "insurance-documents-index")

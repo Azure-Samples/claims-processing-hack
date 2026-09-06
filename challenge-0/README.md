@@ -90,7 +90,7 @@ The deployment provisions these model deployments in Microsoft Foundry:
 
 | Deployment | Purpose |
 | --- | --- |
-| `gpt-5.4-mini` | Chat/reasoning model for all agents and multimodal extraction |
+| `gpt-4.1-mini` | Chat/reasoning model for all agents and multimodal extraction |
 | `text-embedding-3-large` | Embeddings for Azure AI Search integrated vectorization (3072 dimensions) |
 | `mistral-document-ai-2512` | Mistral Document AI OCR |
 

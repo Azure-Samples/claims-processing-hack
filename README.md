@@ -6,7 +6,7 @@ Today, you'll dive into the world of intelligent agent systems powered by Azure 
 
 ## Introduction
 
-Transform insurance claims processing into an AI-native, enterprise-ready system using Microsoft Foundry and the Model Context Protocol. This hackathon uniquely combines three cutting-edge approaches: **compare multiple AI document processing techniques** (gpt-5.4-mini vision, Mistral Document AI, and Azure Document Intelligence) to learn when to use each based on cost and accuracy; **build with the next-generation Microsoft Foundry platform** (ai.azure.com) featuring integrated vectorization, continuous evaluation, and OpenTelemetry tracing for the complete GenAIOps lifecycle; **deploy as an MCP server** through Azure API Management, making your multi-agent workflow accessible to GitHub Copilot, Claude Desktop, and other AI assistants; and **build a user-friendly web interface** using Streamlit to complete the end-to-end solution. From vectorized search foundations through intelligent agent orchestration to AI-native deployment and user interfaces, you'll master the full stack of enterprise AI development—building systems that are observable, scalable, secure, and seamlessly integrated with the broader AI ecosystem.
+Transform insurance claims processing into an AI-native, enterprise-ready system using Microsoft Foundry and the Model Context Protocol. This hackathon uniquely combines three cutting-edge approaches: **compare multiple AI document processing techniques** (gpt-4.1-mini vision, Mistral Document AI, and Azure Document Intelligence) to learn when to use each based on cost and accuracy; **build with the next-generation Microsoft Foundry platform** (ai.azure.com) featuring integrated vectorization, continuous evaluation, and OpenTelemetry tracing for the complete GenAIOps lifecycle; **deploy as an MCP server** through Azure API Management, making your multi-agent workflow accessible to GitHub Copilot, Claude Desktop, and other AI assistants; and **build a user-friendly web interface** using Streamlit to complete the end-to-end solution. From vectorized search foundations through intelligent agent orchestration to AI-native deployment and user interfaces, you'll master the full stack of enterprise AI development—building systems that are observable, scalable, secure, and seamlessly integrated with the broader AI ecosystem.
 
 ## Architecture Overview
 
@@ -19,7 +19,7 @@ flowchart LR
 
     subgraph Processing["🤖 AI Processing"]
         OCR[OCR Agent<br/>Mistral AI]
-        JSON[JSON Agent<br/>gpt-5.4-mini]
+        JSON[JSON Agent<br/>gpt-4.1-mini]
         OCR --> JSON
     end
 
@@ -50,7 +50,7 @@ flowchart LR
 
 By participating in this hackathon, you will learn how to:
 
-- **Compare Multiple AI Document Processing Approaches**: Implement and evaluate gpt-5.4-mini, Mistral Document AI, and Azure Document Intelligence—learning when to use each based on document type, cost, and accuracy needs.
+- **Compare Multiple AI Document Processing Approaches**: Implement and evaluate gpt-4.1-mini, Mistral Document AI, and Azure Document Intelligence—learning when to use each based on document type, cost, and accuracy needs.
 - **Build with Microsoft Foundry Platform**: Master the next-generation [Microsoft Foundry portal](ai.azure.com/nextgen) including agent creation with meta-prompts, integrated vectorization, hybrid search, continuous evaluation, and OpenTelemetry tracing.
 - **Orchestrate Multi-Agent Workflows**: Create intelligent agents using Microsoft Agent Framework that coordinate specialized agents (OCR, JSON structuring, validation), implement function calling, and generate structured outputs.
 - **Implement GenAIOps Best Practices**: Apply the complete AI operations lifecycle—pre-production evaluation, AI red teaming, continuous monitoring, Application Insights integration, and proactive alerting.
@@ -70,7 +70,7 @@ To successfully complete this hackathon, you will need the following:
 ## Challenges
 
 - **Challenge 00**: **[Environment Setup & Azure Resource Deployment](challenge-0/README.md)**: Fork the repository, set up GitHub Codespaces development environment, deploy Azure resources (Microsoft Foundry, Azure AI Search, Blob Storage), configure environment variables with automated scripts, and verify your setup for the hackathon
-- **Challenge 01**: **[Document Processing and Vectorized Search](challenge-1/README.md)**: Build a comprehensive document processing and search system using gpt-5.4-mini for multimodal processing, implement Azure AI Search with integrated vectorization for semantic retrieval, create hybrid search capabilities (keyword + vector + semantic), and establish the knowledge base foundation for AI agents
+- **Challenge 01**: **[Document Processing and Vectorized Search](challenge-1/README.md)**: Build a comprehensive document processing and search system using gpt-4.1-mini for multimodal processing, implement Azure AI Search with integrated vectorization for semantic retrieval, create hybrid search capabilities (keyword + vector + semantic), and establish the knowledge base foundation for AI agents
 - **Challenge 02**: **[Build your 2 Claims Processing Agents](challenge-2/README.md)**: Create an intelligent AI agent using Microsoft Agent Framework and Microsoft Foundry that autonomously orchestrates the document processing pipeline from Challenge 1, implements agent tools for OCR and policy validation, makes intelligent decisions about claim processing, and generates structured outputs
 - **Challenge 03**: **[Observability and Monitoring for AI Agents](challenge-3/README.md)**: Implement comprehensive observability for your Claims Processing Agents using Microsoft Foundry's capabilities—set up OpenTelemetry tracing, configure continuous evaluation for quality and safety metrics, integrate Application Insights, and establish proactive alerting for production systems
 - **Challenge 04**: **[Agent Orchestration and MCP Server Deployment](challenge-4/README.md)**: Orchestrate the OCR and JSON Structuring agents into a multi-agent workflow using Microsoft Agent Framework, implement workflow executors with typed message passing, deploy the workflow as a Model Context Protocol (MCP) server, and integrate with VS Code, Claude Desktop, or other MCP-compatible platforms for reusable AI tooling
