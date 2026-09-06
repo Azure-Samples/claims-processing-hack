@@ -114,7 +114,7 @@
       "location": "[parameters('location')]",
       "tags": "[variables('tags')]",
       "sku": {
-        "name": "basic"
+        "name": "standard"
       },
       "properties": {
         "hostingMode": "default",
