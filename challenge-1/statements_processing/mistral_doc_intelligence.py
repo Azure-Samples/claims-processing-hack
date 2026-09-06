@@ -8,6 +8,7 @@ import json
 import logging
 import httpx
 import os
+import time
 from collections import defaultdict
 from typing import Optional
 from dotenv import load_dotenv
@@ -20,6 +21,22 @@ logger = logging.getLogger(__name__)
 # Statements files location (match GPT script structure)
 STATEMENTS_IMAGE_FOLDER = "../../challenge-0/data/statements/"
 STATEMENTS_OUTPUT_LOCATION = "../output/mistral/"
+
+# The Mistral Document AI deployment is provisioned with a very low capacity, so
+# rate limiting (HTTP 429) is expected when processing several statements in a row.
+RATE_LIMIT_WAIT_SECONDS = 30
+MAX_RETRY_ATTEMPTS = 4
+
+
+def _rate_limit_wait_seconds(response: httpx.Response) -> int:
+    """Seconds to wait after a 429, honouring Retry-After when it asks for longer."""
+    retry_after = response.headers.get("Retry-After")
+    if retry_after:
+        try:
+            return max(RATE_LIMIT_WAIT_SECONDS, int(float(retry_after)))
+        except ValueError:
+            pass
+    return RATE_LIMIT_WAIT_SECONDS
 
 
 def encode_file_to_base64(file_path: str) -> tuple[str, str]:
@@ -113,79 +130,97 @@ def get_ocr_results(file_path: str, json_schema: Optional[dict] = None) -> str:
     print(f"   📦 Model: {model_name}")
     print(f"   🔧 Format: Mistral Document AI (Foundry)")
 
-    try:
-        with httpx.Client(timeout=300.0) as client:
-            response = client.post(endpoint, json=payload, headers=headers)
+    for attempt in range(1, MAX_RETRY_ATTEMPTS + 1):
+        try:
+            with httpx.Client(timeout=300.0) as client:
+                response = client.post(endpoint, json=payload, headers=headers)
 
-            print(f"   📊 Response Status: {response.status_code}")
-            print(f"   📄 Response Length: {len(response.text)} chars")
+                print(f"   📊 Response Status: {response.status_code}")
+                print(f"   📄 Response Length: {len(response.text)} chars")
 
-            # Debug: Show response preview
-            if len(response.text) > 0:
-                print(f"   👀 Response Preview: {response.text[:200]}")
-            else:
-                print(f"   ⚠️  Empty response received!")
-                print(f"   Response Headers: {dict(response.headers)}")
+                # Debug: Show response preview
+                if len(response.text) > 0:
+                    print(f"   👀 Response Preview: {response.text[:200]}")
+                else:
+                    print(f"   ⚠️  Empty response received!")
+                    print(f"   Response Headers: {dict(response.headers)}")
 
-            response.raise_for_status()
+                if response.status_code == 429 and attempt < MAX_RETRY_ATTEMPTS:
+                    wait_seconds = _rate_limit_wait_seconds(response)
+                    logger.warning(
+                        f"[Thread-{thread_id}] Rate limited (429), retrying in "
+                        f"{wait_seconds}s (attempt {attempt}/{MAX_RETRY_ATTEMPTS})"
+                    )
+                    print(
+                        f"   ⏳ Rate limited - waiting {wait_seconds}s before retry "
+                        f"(attempt {attempt}/{MAX_RETRY_ATTEMPTS})"
+                    )
+                    time.sleep(wait_seconds)
+                    continue
 
-            result = response.json()
-            logger.info(f"[Thread-{thread_id}] Mistral Document AI response received")
+                response.raise_for_status()
 
-            # Extract text content from response (Mistral Document AI format)
-            ocr_text = ""
+                result = response.json()
+                logger.info(f"[Thread-{thread_id}] Mistral Document AI response received")
 
-            if "pages" in result and isinstance(result["pages"], list):
-                # Extract markdown from pages (standard Mistral DocAI format)
-                markdown_parts = []
-                for page in result["pages"]:
-                    if isinstance(page, dict) and "markdown" in page:
-                        markdown_parts.append(page["markdown"])
-                ocr_text = "\n\n".join(markdown_parts)
-                logger.info(
-                    f"[Thread-{thread_id}] Extracted markdown from {len(result['pages'])} page(s)"
-                )
-                print(f"   ✅ Extracted markdown from {len(result['pages'])} page(s)")
-            elif "content" in result:
-                ocr_text = result["content"]
-                print(f"   ✅ Extracted content field")
-            elif "text" in result:
-                ocr_text = result["text"]
-                print(f"   ✅ Extracted text field")
-            elif "choices" in result and len(result["choices"]) > 0:
-                # Fallback: OpenAI format
-                ocr_text = result["choices"][0].get("message", {}).get("content", "")
-                print(f"   ✅ Extracted from OpenAI format")
-            else:
-                logger.warning(f"[Thread-{thread_id}] Unexpected response format")
-                print(f"   ⚠️  Unexpected response format. Keys: {list(result.keys())}")
+                # Extract text content from response (Mistral Document AI format)
                 ocr_text = ""
 
-            logger.info(
-                f"[Thread-{thread_id}] Mistral Document AI OCR completed, {len(ocr_text)} characters"
-            )
-            print(f"   ✅ OCR completed: {len(ocr_text)} characters extracted")
-            return ocr_text
+                if "pages" in result and isinstance(result["pages"], list):
+                    # Extract markdown from pages (standard Mistral DocAI format)
+                    markdown_parts = []
+                    for page in result["pages"]:
+                        if isinstance(page, dict) and "markdown" in page:
+                            markdown_parts.append(page["markdown"])
+                    ocr_text = "\n\n".join(markdown_parts)
+                    logger.info(
+                        f"[Thread-{thread_id}] Extracted markdown from {len(result['pages'])} page(s)"
+                    )
+                    print(f"   ✅ Extracted markdown from {len(result['pages'])} page(s)")
+                elif "content" in result:
+                    ocr_text = result["content"]
+                    print(f"   ✅ Extracted content field")
+                elif "text" in result:
+                    ocr_text = result["text"]
+                    print(f"   ✅ Extracted text field")
+                elif "choices" in result and len(result["choices"]) > 0:
+                    # Fallback: OpenAI format
+                    ocr_text = result["choices"][0].get("message", {}).get("content", "")
+                    print(f"   ✅ Extracted from OpenAI format")
+                else:
+                    logger.warning(f"[Thread-{thread_id}] Unexpected response format")
+                    print(f"   ⚠️  Unexpected response format. Keys: {list(result.keys())}")
+                    ocr_text = ""
 
-    except httpx.HTTPStatusError as e:
-        logger.error(
-            f"[Thread-{thread_id}] Mistral API HTTP error: {e.response.status_code}"
-        )
-        logger.error(f"[Thread-{thread_id}] Response: {e.response.text}")
-        print(f"   ❌ HTTP Error {e.response.status_code}: {e.response.text[:500]}")
-        raise Exception(
-            f"Mistral Document AI API error: {e.response.status_code} - {e.response.text}"
-        )
-    except httpx.RequestError as e:
-        logger.error(f"[Thread-{thread_id}] Mistral API request error: {str(e)}")
-        print(f"   ❌ Request Error: {str(e)}")
-        raise Exception(f"Mistral Document AI request failed: {str(e)}")
-    except Exception as e:
-        logger.error(
-            f"[Thread-{thread_id}] Unexpected error during Mistral Document AI processing: {str(e)}"
-        )
-        print(f"   ❌ Unexpected Error: {str(e)}")
-        raise
+                logger.info(
+                    f"[Thread-{thread_id}] Mistral Document AI OCR completed, {len(ocr_text)} characters"
+                )
+                print(f"   ✅ OCR completed: {len(ocr_text)} characters extracted")
+                return ocr_text
+
+        except httpx.HTTPStatusError as e:
+            logger.error(
+                f"[Thread-{thread_id}] Mistral API HTTP error: {e.response.status_code}"
+            )
+            logger.error(f"[Thread-{thread_id}] Response: {e.response.text}")
+            print(f"   ❌ HTTP Error {e.response.status_code}: {e.response.text[:500]}")
+            raise Exception(
+                f"Mistral Document AI API error: {e.response.status_code} - {e.response.text}"
+            )
+        except httpx.RequestError as e:
+            logger.error(f"[Thread-{thread_id}] Mistral API request error: {str(e)}")
+            print(f"   ❌ Request Error: {str(e)}")
+            raise Exception(f"Mistral Document AI request failed: {str(e)}")
+        except Exception as e:
+            logger.error(
+                f"[Thread-{thread_id}] Unexpected error during Mistral Document AI processing: {str(e)}"
+            )
+            print(f"   ❌ Unexpected Error: {str(e)}")
+            raise
+
+    raise Exception(
+        f"Mistral Document AI still rate limited after {MAX_RETRY_ATTEMPTS} attempts"
+    )
 
 
 def process_statements_with_mistral():
