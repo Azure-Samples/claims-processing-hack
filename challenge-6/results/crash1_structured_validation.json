@@ -1,0 +1,94 @@
+{
+  "claim_file": "crash1_structured.json",
+  "policy_match": {
+    "policy_number": "LIAB-AUTO-001",
+    "policy_name": "Liability Only Auto Insurance Policy",
+    "policy_type": "liability_only",
+    "match_confidence": "high"
+  },
+  "coverage_determination": {
+    "decision": "DENIED",
+    "applicable_coverage": "None",
+    "deductible": "N/A",
+    "coverage_limit": "N/A",
+    "reasoning": "The claim involves damage to the policyholder's own vehicle due to a collision. The policy is a liability-only auto insurance policy and explicitly does not cover damage to the policyholder's own vehicle, as stated under 'covers_own_vehicle_collision': false. Additionally, the key exclusion 'Damage to own vehicle' applies. Since the policy does not include collision or comprehensive coverage, and only covers bodily injury liability to others, the requested full coverage of repair expenses minus deductible is outside the policy's scope. Therefore, the claim is denied based on the explicit coverage exclusion for own vehicle damage in a liability-only policy.",
+    "exclusions_triggered": [
+      "Damage to own vehicle"
+    ],
+    "recommendations": "Advise the claimant that their liability-only policy does not cover repair costs for damage to their own vehicle. They may consider paying for repairs out-of-pocket or obtaining collision/comprehensive coverage for future incidents. If they believe another party is liable (such as the driver who struck the vehicle), they may pursue a claim against that party's insurance."
+  },
+  "full_policy_result": {
+    "policy_match": {
+      "policy_number": "LIAB-AUTO-001",
+      "policy_name": "Liability Only Auto Insurance Policy",
+      "policy_type": "liability_only",
+      "match_confidence": "high"
+    },
+    "coverage_summary": {
+      "covers_own_vehicle_collision": false,
+      "covers_own_vehicle_comprehensive": false,
+      "covers_liability_bodily_injury": true,
+      "covers_liability_property_damage": false,
+      "covers_medical_payments": false,
+      "covers_uninsured_motorist": false,
+      "covers_rental_car": false,
+      "covers_roadside_assistance": false,
+      "covers_towing": false
+    },
+    "limits": {
+      "collision_limit": "N/A",
+      "comprehensive_limit": "N/A",
+      "bodily_injury_per_person": "N/A",
+      "bodily_injury_per_accident": "N/A",
+      "property_damage_per_accident": "N/A",
+      "medical_payments_per_person": "N/A"
+    },
+    "deductibles": {
+      "collision_deductible": "N/A",
+      "comprehensive_deductible": "N/A"
+    },
+    "key_exclusions": [
+      "Damage to own vehicle",
+      "Injuries to self"
+    ],
+    "own_vehicle_damage_covered": false,
+    "notes": "This liability-only policy provides coverage for bodily injury liability to others including medical expenses, lost wages, pain and suffering, rehabilitation, legal defense, and court judgments. It does not cover own vehicle damage, medical payments, uninsured motorist, rental car, roadside assistance, or towing.",
+    "status": "success",
+    "raw_policy_text_length": 2175,
+    "timestamp": "2026-09-07T14:21:18.438679"
+  },
+  "full_validation_result": {
+    "coverage_decision": "DENIED",
+    "policy_type": "Liability Only Auto Insurance Policy",
+    "policy_number": "LIAB-AUTO-001",
+    "applicable_coverage": "None",
+    "deductible": "N/A",
+    "coverage_limit": "N/A",
+    "reasoning": "The claim involves damage to the policyholder's own vehicle due to a collision. The policy is a liability-only auto insurance policy and explicitly does not cover damage to the policyholder's own vehicle, as stated under 'covers_own_vehicle_collision': false. Additionally, the key exclusion 'Damage to own vehicle' applies. Since the policy does not include collision or comprehensive coverage, and only covers bodily injury liability to others, the requested full coverage of repair expenses minus deductible is outside the policy's scope. Therefore, the claim is denied based on the explicit coverage exclusion for own vehicle damage in a liability-only policy.",
+    "exclusions_checked": [
+      "Damage to own vehicle",
+      "Injuries to self"
+    ],
+    "exclusions_triggered": [
+      "Damage to own vehicle"
+    ],
+    "recommendations": "Advise the claimant that their liability-only policy does not cover repair costs for damage to their own vehicle. They may consider paying for repairs out-of-pocket or obtaining collision/comprehensive coverage for future incidents. If they believe another party is liable (such as the driver who struck the vehicle), they may pursue a claim against that party's insurance.",
+    "confidence": "high",
+    "status": "success",
+    "timestamp": "2026-09-07T14:21:52.894339",
+    "claim_summary": {
+      "policy_number": "LIAB-AUTO-001",
+      "policy_holder_name": "John Peterson",
+      "vehicle_year_make_model": "2004 Honda Accord",
+      "vehicle_color": "Silver",
+      "vehicle_vin": "1HGCM56404A123456",
+      "incident_date": "July 17, 2025",
+      "incident_time": "8:30 AM",
+      "incident_location": "Parking lot, 2325 Main Street, Springfield, OH 45503",
+      "incident_description": "Vehicle legally parked in marked space. Gray pickup truck attempting to park beside struck the front end and driver's side of vehicle causing significant damage. Other driver left information and waited for police.",
+      "damage_description": "Front bumper dislodged and partially detached; severe denting and scraping on driver's side front quarter panel; wheel and tire on driver's side front damaged; paint transfer and deformity on the driver's door; headlamp assembly and grille potentially damaged; possible hidden damage to mechanical components behind the bumper",
+      "claim_request": "Full coverage of repair expenses minus deductible"
+    }
+  },
+  "workflow_timestamp": "2026-09-07T14:21:52.895047"
+}

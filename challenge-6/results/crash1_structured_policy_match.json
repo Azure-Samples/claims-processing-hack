@@ -1,0 +1,44 @@
+{
+  "policy_match": {
+    "policy_number": "LIAB-AUTO-001",
+    "policy_name": "Liability Only Auto Insurance Policy",
+    "policy_type": "liability_only",
+    "match_confidence": "high"
+  },
+  "coverage_summary": {
+    "covers_own_vehicle_collision": false,
+    "covers_own_vehicle_comprehensive": false,
+    "covers_liability_bodily_injury": true,
+    "covers_liability_property_damage": true,
+    "covers_medical_payments": false,
+    "covers_uninsured_motorist": false,
+    "covers_rental_car": false,
+    "covers_roadside_assistance": false,
+    "covers_towing": false
+  },
+  "limits": {
+    "collision_limit": "N/A",
+    "comprehensive_limit": "N/A",
+    "bodily_injury_per_person": "N/A",
+    "bodily_injury_per_accident": "N/A",
+    "property_damage_per_accident": "N/A",
+    "medical_payments_per_person": "N/A"
+  },
+  "deductibles": {
+    "collision_deductible": "N/A",
+    "comprehensive_deductible": "N/A"
+  },
+  "key_exclusions": [
+    "Damage to insured's own vehicle",
+    "Injuries to the insured/driver",
+    "Medical payments coverage",
+    "Uninsured motorist coverage",
+    "Rental car coverage",
+    "Roadside assistance and towing"
+  ],
+  "own_vehicle_damage_covered": false,
+  "notes": "This policy provides only the minimum legal liability coverage for damages and injuries caused to third parties. It does not cover any damage to the insured's own vehicle nor medical payments to the insured.",
+  "status": "success",
+  "raw_policy_text_length": 2175,
+  "timestamp": "2026-09-07T14:17:35.372220"
+}
