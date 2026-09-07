@@ -1,0 +1,34 @@
+{
+  "coverage_decision": "DENIED",
+  "policy_type": "Liability Only Auto Insurance Policy",
+  "policy_number": "LIAB-AUTO-001",
+  "applicable_coverage": "None",
+  "deductible": "N/A",
+  "coverage_limit": "N/A",
+  "reasoning": "The policy is a liability-only auto insurance policy, which explicitly excludes coverage for damage to the policyholder's own vehicle. The claim submitted is for collision damage to the insured\u2019s own vehicle caused by another driver hitting it while parked. According to the coverage summary, this policy does not cover own vehicle collision or comprehensive damage, and the key exclusions explicitly state 'Own vehicle damage is not covered.' Therefore, coverage for repair expenses to the insured vehicle is denied under this policy.",
+  "exclusions_checked": [
+    "Own vehicle damage is not covered",
+    "Medical payments coverage not included",
+    "Injuries to the policyholder or insured are not covered"
+  ],
+  "exclusions_triggered": [
+    "Own vehicle damage is not covered"
+  ],
+  "recommendations": "Advise the claimant that this liability-only policy does not cover damage to their own vehicle. They may need to pursue a claim through the at-fault party's insurance or consider adding collision coverage or comprehensive coverage in the future. They may also want to contact the other driver's insurer for property damage coverage.",
+  "confidence": "high",
+  "status": "success",
+  "timestamp": "2026-09-07T14:20:25.306793",
+  "claim_summary": {
+    "policy_number": "LIAB-AUTO-001",
+    "policy_holder_name": "John Peterson",
+    "vehicle_year_make_model": "2004 Honda Accord",
+    "vehicle_color": "Silver",
+    "vehicle_vin": "1HGCM56404A123456",
+    "incident_date": "July 17, 2025",
+    "incident_time": "8:30 AM",
+    "incident_location": "Parking lot, 2325 Main Street, Springfield, OH 45503",
+    "incident_description": "Vehicle legally parked in marked space. Gray pickup truck attempting to park beside struck the front end and driver's side of vehicle causing significant damage. Other driver left information and waited for police.",
+    "damage_description": "Front bumper dislodged and partially detached; severe denting and scraping on driver's side front quarter panel; wheel and tire on driver's side front damaged; paint transfer and deformity on the driver's door; headlamp assembly and grille potentially damaged; possible hidden damage to mechanical components behind the bumper",
+    "claim_request": "Full coverage of repair expenses minus deductible"
+  }
+}

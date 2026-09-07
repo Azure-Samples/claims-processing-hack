@@ -1,0 +1,49 @@
+{
+  "total_claims": 5,
+  "correct": 2,
+  "incorrect": 3,
+  "errors": 0,
+  "details": [
+    {
+      "claim": "crash1",
+      "expected": "DENIED",
+      "actual": "DENIED",
+      "correct": true,
+      "expected_reason": "Liability-only policy does not cover damage to the policyholder's own vehicle. Section 4.1 explicitly excludes: 'Collision damage to your vehicle' and 'Comprehensive damage (theft, vandalism, weather)'. The claimant requests repair coverage for their own 2004 Honda Accord, which is not covered.",
+      "actual_reason": "The policy is a liability-only auto insurance policy that explicitly does not cover damage to the policyholder's own vehicle, as stated in the key exclusions: 'Damage to own vehicle is not covered'. The claim involves significant damage to the insured's own 2004 Honda Accord. The coverage summary confirms this by indicating 'covers_own_vehicle_collision' and 'covers_own_vehicle_comprehensive' are both false. Given this, the policy does not cover repair expenses for this type of claim, leading to a denial."
+    },
+    {
+      "claim": "crash2",
+      "expected": "APPROVED",
+      "actual": "DENIED",
+      "correct": false,
+      "expected_reason": "Commercial Auto policy includes Physical Damage Coverage with both Collision and Comprehensive coverage. The claim involves a collision during normal driving (eastbound through green light), which falls under 'Damage from vehicle collisions during business use'. No exclusions apply.",
+      "actual_reason": "The policy explicitly does not cover own vehicle collision damage (covers_own_vehicle_collision = false) and does not cover own vehicle comprehensive damage (covers_own_vehicle_comprehensive = false). The claim is for extensive damage to the policyholder's own vehicle resulting from a collision. According to the critical validation logic, if the policy is liability-only (or excludes collision and comprehensive coverage for own vehicle) and the claim is for damage to the policyholder's own vehicle, the claim must be denied. This policy covers liability bodily injury and property damage but not the insured's own vehicle damages. No applicable coverage section provides for repair or replacement of the insured vehicle in this scenario."
+    },
+    {
+      "claim": "crash3",
+      "expected": "DENIED",
+      "actual": "DENIED",
+      "correct": true,
+      "expected_reason": "Same as crash1 \u2014 liability-only policy does not cover the policyholder's own vehicle damage. The claimant requests 'full assessment and repair of all damage' to their own 2012 Suzuki SX4. Section 4.1 explicitly excludes collision and comprehensive damage to the insured vehicle.",
+      "actual_reason": "The policy 'Liability Only Auto Insurance Policy' explicitly excludes coverage for damage to the insured's own vehicle. Since the claim involves damage to Michael Rodriguez's own 2012 Suzuki SX4, including the rear quarter panel, front bumper, and suspension, and the policy does not provide collision or comprehensive coverage, the claim is denied. The coverage summary confirms that own vehicle collision and comprehensive damages are not covered, and the key exclusions list specifically mentions 'Damage to the insured's own vehicle.' Liability coverage applies only to bodily injury and property damage to others, not to the insured's vehicle damage."
+    },
+    {
+      "claim": "crash4",
+      "expected": "APPROVED",
+      "actual": "PARTIAL_COVERAGE",
+      "correct": false,
+      "expected_reason": "Commercial Auto policy covers collision damage for business vehicles. The claim involves a rear-end collision while driving on business roads. Falls under 'Damage from vehicle collisions during business use'. Towing reimbursement is also available. No exclusions apply.",
+      "actual_reason": "The claim involves collision damage caused by a rear-end impact to the policyholder's own 2011 Subaru Outback, which is specifically covered under the policy's own vehicle collision coverage. The policy explicitly covers own vehicle collision and comprehensive damages. However, towing costs are requested, but the policy does not provide coverage for towing (covers_towing: false). There are no stated deductibles or coverage limits, so it is uncertain if the damage or repair costs exceed any internal policy limits. No exclusions such as commercial use restrictions, racing, DUI, or intentional damage are triggered. Therefore, collision repairs are covered, but towing cost reimbursement is denied."
+    },
+    {
+      "claim": "crash5",
+      "expected": "APPROVED",
+      "actual": "PARTIAL_COVERAGE",
+      "correct": false,
+      "expected_reason": "Commercial Auto policy covers collision damage. The claim involves an intersection collision with a pickup truck. Falls under 'Damage from vehicle collisions during business use'. No exclusions apply. Towing reimbursement included in claim request.",
+      "actual_reason": "The claim involves collision damage to the policyholder's own vehicle and the policy explicitly covers own vehicle collision damage. The damage described (extensive body, suspension, and undercarriage damage) is consistent with a collision claim, which is covered under the policy\u2019s own vehicle collision coverage. However, the policy does not provide explicit information regarding deductible amounts or specific coverage limits for collision or towing. Additionally, towing coverage is not included in this policy, so reimbursement for towing costs is not covered. Hence, the claim is approved for vehicle damage repairs under collision coverage but towing expenses must be denied. Due to the absence of specified limits and deductibles, there is a degree of uncertainty whether the entire repair costs will be covered fully or partially."
+    }
+  ],
+  "accuracy": 0.4
+}

@@ -1,0 +1,477 @@
+[
+  {
+    "claim_file": "crash1_structured.json",
+    "policy_match": {
+      "policy_number": "LIAB-AUTO-001",
+      "policy_name": "Liability Only Auto Insurance Policy",
+      "policy_type": "liability_only",
+      "match_confidence": "high"
+    },
+    "coverage_determination": {
+      "decision": "DENIED",
+      "applicable_coverage": "None",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The policy is a liability-only auto insurance policy that explicitly does not cover damage to the policyholder's own vehicle, as stated in the key exclusions: 'Damage to own vehicle is not covered'. The claim involves significant damage to the insured's own 2004 Honda Accord. The coverage summary confirms this by indicating 'covers_own_vehicle_collision' and 'covers_own_vehicle_comprehensive' are both false. Given this, the policy does not cover repair expenses for this type of claim, leading to a denial.",
+      "exclusions_triggered": [
+        "Damage to own vehicle is not covered"
+      ],
+      "recommendations": "Inform the claimant that the policy does not cover damage to their own vehicle. Recommend reviewing options for collision or comprehensive coverage in future policies. Advise pursuing claims through the at-fault party's insurance if applicable."
+    },
+    "full_policy_result": {
+      "policy_match": {
+        "policy_number": "LIAB-AUTO-001",
+        "policy_name": "Liability Only Auto Insurance Policy",
+        "policy_type": "liability_only",
+        "match_confidence": "high"
+      },
+      "coverage_summary": {
+        "covers_own_vehicle_collision": false,
+        "covers_own_vehicle_comprehensive": false,
+        "covers_liability_bodily_injury": true,
+        "covers_liability_property_damage": false,
+        "covers_medical_payments": false,
+        "covers_uninsured_motorist": false,
+        "covers_rental_car": false,
+        "covers_roadside_assistance": false,
+        "covers_towing": false
+      },
+      "limits": {
+        "collision_limit": "N/A",
+        "comprehensive_limit": "N/A",
+        "bodily_injury_per_person": "N/A",
+        "bodily_injury_per_accident": "N/A",
+        "property_damage_per_accident": "N/A",
+        "medical_payments_per_person": "N/A"
+      },
+      "deductibles": {
+        "collision_deductible": "N/A",
+        "comprehensive_deductible": "N/A"
+      },
+      "key_exclusions": [
+        "Damage to own vehicle is not covered",
+        "Injuries to the insured (self) are not covered"
+      ],
+      "own_vehicle_damage_covered": false,
+      "notes": "Policy provides minimum liability coverage for damages and injuries caused to others. No coverage for own vehicle damages or medical payments to the insured.",
+      "status": "success",
+      "raw_policy_text_length": 2175,
+      "timestamp": "2026-09-07T14:23:18.841955"
+    },
+    "full_validation_result": {
+      "coverage_decision": "DENIED",
+      "policy_type": "Liability Only Auto Insurance Policy",
+      "policy_number": "LIAB-AUTO-001",
+      "applicable_coverage": "None",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The policy is a liability-only auto insurance policy that explicitly does not cover damage to the policyholder's own vehicle, as stated in the key exclusions: 'Damage to own vehicle is not covered'. The claim involves significant damage to the insured's own 2004 Honda Accord. The coverage summary confirms this by indicating 'covers_own_vehicle_collision' and 'covers_own_vehicle_comprehensive' are both false. Given this, the policy does not cover repair expenses for this type of claim, leading to a denial.",
+      "exclusions_checked": [
+        "Damage to own vehicle",
+        "Injuries to the insured",
+        "Collision coverage",
+        "Comprehensive coverage"
+      ],
+      "exclusions_triggered": [
+        "Damage to own vehicle is not covered"
+      ],
+      "recommendations": "Inform the claimant that the policy does not cover damage to their own vehicle. Recommend reviewing options for collision or comprehensive coverage in future policies. Advise pursuing claims through the at-fault party's insurance if applicable.",
+      "confidence": "high",
+      "status": "success",
+      "timestamp": "2026-09-07T14:23:25.799223",
+      "claim_summary": {
+        "policy_number": "LIAB-AUTO-001",
+        "policy_holder_name": "John Peterson",
+        "vehicle_year_make_model": "2004 Honda Accord",
+        "vehicle_color": "Silver",
+        "vehicle_vin": "1HGCM56404A123456",
+        "incident_date": "July 17, 2025",
+        "incident_time": "8:30 AM",
+        "incident_location": "Parking lot, 2325 Main Street, Springfield, OH 45503",
+        "incident_description": "Vehicle legally parked in marked space. Gray pickup truck attempting to park beside struck the front end and driver's side of vehicle causing significant damage. Other driver left information and waited for police.",
+        "damage_description": "Front bumper dislodged and partially detached; severe denting and scraping on driver's side front quarter panel; wheel and tire on driver's side front damaged; paint transfer and deformity on the driver's door; headlamp assembly and grille potentially damaged; possible hidden damage to mechanical components behind the bumper",
+        "claim_request": "Full coverage of repair expenses minus deductible"
+      }
+    },
+    "workflow_timestamp": "2026-09-07T14:23:25.799954"
+  },
+  {
+    "claim_file": "crash2_structured.json",
+    "policy_match": {
+      "policy_number": "COMM-AUTO-001",
+      "policy_name": "Commercial Auto Insurance Policy",
+      "policy_type": "commercial",
+      "match_confidence": "high"
+    },
+    "coverage_determination": {
+      "decision": "DENIED",
+      "applicable_coverage": "None",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The policy explicitly does not cover own vehicle collision damage (covers_own_vehicle_collision = false) and does not cover own vehicle comprehensive damage (covers_own_vehicle_comprehensive = false). The claim is for extensive damage to the policyholder's own vehicle resulting from a collision. According to the critical validation logic, if the policy is liability-only (or excludes collision and comprehensive coverage for own vehicle) and the claim is for damage to the policyholder's own vehicle, the claim must be denied. This policy covers liability bodily injury and property damage but not the insured's own vehicle damages. No applicable coverage section provides for repair or replacement of the insured vehicle in this scenario.",
+      "exclusions_triggered": [
+        "No own vehicle collision or comprehensive coverage"
+      ],
+      "recommendations": "Inform the claimant that their policy does not cover collision damage to their own vehicle. Recommend they review their policy options for adding collision and comprehensive coverage if desired. Consider pursuing recovery from the at-fault driver's liability insurance if possible."
+    },
+    "full_policy_result": {
+      "policy_match": {
+        "policy_number": "COMM-AUTO-001",
+        "policy_name": "Commercial Auto Insurance Policy",
+        "policy_type": "commercial",
+        "match_confidence": "high"
+      },
+      "coverage_summary": {
+        "covers_own_vehicle_collision": false,
+        "covers_own_vehicle_comprehensive": false,
+        "covers_liability_bodily_injury": true,
+        "covers_liability_property_damage": true,
+        "covers_medical_payments": true,
+        "covers_uninsured_motorist": true,
+        "covers_rental_car": true,
+        "covers_roadside_assistance": false,
+        "covers_towing": false
+      },
+      "limits": {
+        "collision_limit": "N/A",
+        "comprehensive_limit": "N/A",
+        "bodily_injury_per_person": "N/A",
+        "bodily_injury_per_accident": "N/A",
+        "property_damage_per_accident": "N/A",
+        "medical_payments_per_person": "N/A"
+      },
+      "deductibles": {
+        "collision_deductible": "N/A",
+        "comprehensive_deductible": "N/A"
+      },
+      "key_exclusions": [],
+      "own_vehicle_damage_covered": false,
+      "notes": "Policy is a specialized commercial auto insurance for business vehicles with liability, medical payments, uninsured motorist, rental car, and commercial-specific coverages. It does not explicitly mention own vehicle collision or comprehensive coverage or roadside assistance and towing. No explicit coverage limits or deductibles are detailed.",
+      "status": "success",
+      "raw_policy_text_length": 2428,
+      "timestamp": "2026-09-07T14:23:32.216618"
+    },
+    "full_validation_result": {
+      "coverage_decision": "DENIED",
+      "policy_type": "Commercial Auto Insurance Policy",
+      "policy_number": "COMM-AUTO-001",
+      "applicable_coverage": "None",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The policy explicitly does not cover own vehicle collision damage (covers_own_vehicle_collision = false) and does not cover own vehicle comprehensive damage (covers_own_vehicle_comprehensive = false). The claim is for extensive damage to the policyholder's own vehicle resulting from a collision. According to the critical validation logic, if the policy is liability-only (or excludes collision and comprehensive coverage for own vehicle) and the claim is for damage to the policyholder's own vehicle, the claim must be denied. This policy covers liability bodily injury and property damage but not the insured's own vehicle damages. No applicable coverage section provides for repair or replacement of the insured vehicle in this scenario.",
+      "exclusions_checked": [
+        "Own vehicle collision coverage",
+        "Own vehicle comprehensive coverage"
+      ],
+      "exclusions_triggered": [
+        "No own vehicle collision or comprehensive coverage"
+      ],
+      "recommendations": "Inform the claimant that their policy does not cover collision damage to their own vehicle. Recommend they review their policy options for adding collision and comprehensive coverage if desired. Consider pursuing recovery from the at-fault driver's liability insurance if possible.",
+      "confidence": "high",
+      "status": "success",
+      "timestamp": "2026-09-07T14:23:36.556553",
+      "claim_summary": {
+        "policy_number": "COMM-AUTO-001",
+        "policy_holder_name": "Samantha Turner",
+        "vehicle_year_make_model": "2017 Honda Civic Hatchback",
+        "vehicle_color": "Blue-Gray",
+        "vehicle_vin": "19XFC2F5XHE200487",
+        "incident_date": "July 18, 2025",
+        "incident_time": "4:10 PM",
+        "incident_location": "2100 Madison Avenue, Albany, NY 12208",
+        "incident_description": "Driving eastbound through green light when another vehicle traveling southbound failed to stop at red signal and struck vehicle on driver's side. Car spun partially before stopping near curb. Other driver admitted fault to police.",
+        "damage_description": "Heavy intrusion and bending on driver's front and rear doors; B-pillar area severely compromised; rear wheel misaligned, not functional for safe driving; shattered rear driver's side window; scraping and paint transfer along both driver's side doors and lower panels; deployment of side airbags; possible interior damage to armrests and door controls; vehicle towed from accident location",
+        "claim_request": "Assessment and full coverage for extensive body and structural repairs"
+      }
+    },
+    "workflow_timestamp": "2026-09-07T14:23:36.557245"
+  },
+  {
+    "claim_file": "crash3_structured.json",
+    "policy_match": {
+      "policy_number": "LIAB-AUTO-001",
+      "policy_name": "Liability Only Auto Insurance Policy",
+      "policy_type": "liability_only",
+      "match_confidence": "high"
+    },
+    "coverage_determination": {
+      "decision": "DENIED",
+      "applicable_coverage": "None",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The policy 'Liability Only Auto Insurance Policy' explicitly excludes coverage for damage to the insured's own vehicle. Since the claim involves damage to Michael Rodriguez's own 2012 Suzuki SX4, including the rear quarter panel, front bumper, and suspension, and the policy does not provide collision or comprehensive coverage, the claim is denied. The coverage summary confirms that own vehicle collision and comprehensive damages are not covered, and the key exclusions list specifically mentions 'Damage to the insured's own vehicle.' Liability coverage applies only to bodily injury and property damage to others, not to the insured's vehicle damage.",
+      "exclusions_triggered": [
+        "Damage to the insured's own vehicle"
+      ],
+      "recommendations": "Inform the claimant that their current liability-only policy does not cover damage to their own vehicle. They may consider purchasing collision and comprehensive coverage in the future for such damages. For this claim, the claimant should pursue repair cost reimbursement through the at-fault driver's liability coverage or their legal options against the at-fault driver directly."
+    },
+    "full_policy_result": {
+      "policy_match": {
+        "policy_number": "LIAB-AUTO-001",
+        "policy_name": "Liability Only Auto Insurance Policy",
+        "policy_type": "liability_only",
+        "match_confidence": "high"
+      },
+      "coverage_summary": {
+        "covers_own_vehicle_collision": false,
+        "covers_own_vehicle_comprehensive": false,
+        "covers_liability_bodily_injury": true,
+        "covers_liability_property_damage": true,
+        "covers_medical_payments": false,
+        "covers_uninsured_motorist": false,
+        "covers_rental_car": false,
+        "covers_roadside_assistance": false,
+        "covers_towing": false
+      },
+      "limits": {
+        "collision_limit": "N/A",
+        "comprehensive_limit": "N/A",
+        "bodily_injury_per_person": "Not specified",
+        "bodily_injury_per_accident": "Not specified",
+        "property_damage_per_accident": "Not specified",
+        "medical_payments_per_person": "N/A"
+      },
+      "deductibles": {
+        "collision_deductible": "N/A",
+        "comprehensive_deductible": "N/A"
+      },
+      "key_exclusions": [
+        "Damage to the insured's own vehicle",
+        "Injuries to the insured driver or occupants",
+        "Medical payments coverage",
+        "Uninsured motorist coverage",
+        "Rental car coverage",
+        "Roadside assistance",
+        "Towing"
+      ],
+      "own_vehicle_damage_covered": false,
+      "notes": "This policy provides minimum required liability coverage only. It explicitly excludes coverage for the insured's own vehicle damages and medical payments.",
+      "status": "success",
+      "raw_policy_text_length": 2175,
+      "timestamp": "2026-09-07T14:23:44.014364"
+    },
+    "full_validation_result": {
+      "coverage_decision": "DENIED",
+      "policy_type": "Liability Only Auto Insurance Policy",
+      "policy_number": "LIAB-AUTO-001",
+      "applicable_coverage": "None",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The policy 'Liability Only Auto Insurance Policy' explicitly excludes coverage for damage to the insured's own vehicle. Since the claim involves damage to Michael Rodriguez's own 2012 Suzuki SX4, including the rear quarter panel, front bumper, and suspension, and the policy does not provide collision or comprehensive coverage, the claim is denied. The coverage summary confirms that own vehicle collision and comprehensive damages are not covered, and the key exclusions list specifically mentions 'Damage to the insured's own vehicle.' Liability coverage applies only to bodily injury and property damage to others, not to the insured's vehicle damage.",
+      "exclusions_checked": [
+        "Damage to the insured's own vehicle",
+        "Medical payments coverage",
+        "Uninsured motorist coverage"
+      ],
+      "exclusions_triggered": [
+        "Damage to the insured's own vehicle"
+      ],
+      "recommendations": "Inform the claimant that their current liability-only policy does not cover damage to their own vehicle. They may consider purchasing collision and comprehensive coverage in the future for such damages. For this claim, the claimant should pursue repair cost reimbursement through the at-fault driver's liability coverage or their legal options against the at-fault driver directly.",
+      "confidence": "high",
+      "status": "success",
+      "timestamp": "2026-09-07T14:23:48.252835",
+      "claim_summary": {
+        "policy_number": "LIAB-AUTO-001",
+        "policy_holder_name": "Michael Rodriguez",
+        "vehicle_year_make_model": "2012 Suzuki SX4",
+        "vehicle_color": "White",
+        "vehicle_vin": "JS2YB5A31C6109734",
+        "incident_date": "July 19, 2025",
+        "incident_time": "6:30 PM",
+        "incident_location": "400 East 8th Street, Harrisburg, PA 17102",
+        "incident_description": "Operating vehicle eastbound on East 8th Street, slowed to make left turn into residential driveway. Another vehicle traveling at excessive speed attempted to overtake on left and collided forcefully with rear driver's side quarter panel. Impact caused car to spin and strike nearby curb, resulting in further damage to front bumper and left front wheel. At-fault driver admitted fault to responding police officer.",
+        "damage_description": "Major denting and scraping to rear driver's side quarter panel and bumper; damage to rear wheel arch; front bumper heavily crumpled and partially detached due to secondary curb impact; left front wheel and suspension suspected damaged; minor scraping to front left headlight housing; vehicle determined not drivable and towed for repair assessment",
+        "claim_request": "Full assessment and repair of all damage to rear quarter panel, front bumper, and suspension",
+        "weather_conditions": "Partly cloudy, roads dry"
+      }
+    },
+    "workflow_timestamp": "2026-09-07T14:23:48.253672"
+  },
+  {
+    "claim_file": "crash4_structured.json",
+    "policy_match": {
+      "policy_number": "COMM-AUTO-001",
+      "policy_name": "Commercial Auto Insurance Policy",
+      "policy_type": "commercial",
+      "match_confidence": "high"
+    },
+    "coverage_determination": {
+      "decision": "PARTIAL_COVERAGE",
+      "applicable_coverage": "Own Vehicle Collision Coverage",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The claim involves collision damage caused by a rear-end impact to the policyholder's own 2011 Subaru Outback, which is specifically covered under the policy's own vehicle collision coverage. The policy explicitly covers own vehicle collision and comprehensive damages. However, towing costs are requested, but the policy does not provide coverage for towing (covers_towing: false). There are no stated deductibles or coverage limits, so it is uncertain if the damage or repair costs exceed any internal policy limits. No exclusions such as commercial use restrictions, racing, DUI, or intentional damage are triggered. Therefore, collision repairs are covered, but towing cost reimbursement is denied.",
+      "exclusions_triggered": [
+        "Towing costs not covered"
+      ],
+      "recommendations": "Approve repair costs related to collision damage. Deny towing cost reimbursement. Confirm if any undisclosed deductibles or coverage limits apply internally. Claim adjuster should verify extent of mechanical/suspension damage and coordinate supplemental estimates if needed. Advise claimant of towing cost denial and suggest alternative towing coverage options for future."
+    },
+    "full_policy_result": {
+      "policy_match": {
+        "policy_number": "COMM-AUTO-001",
+        "policy_name": "Commercial Auto Insurance Policy",
+        "policy_type": "commercial",
+        "match_confidence": "high"
+      },
+      "coverage_summary": {
+        "covers_own_vehicle_collision": true,
+        "covers_own_vehicle_comprehensive": true,
+        "covers_liability_bodily_injury": true,
+        "covers_liability_property_damage": true,
+        "covers_medical_payments": true,
+        "covers_uninsured_motorist": true,
+        "covers_rental_car": true,
+        "covers_roadside_assistance": false,
+        "covers_towing": false
+      },
+      "limits": {
+        "collision_limit": "N/A",
+        "comprehensive_limit": "N/A",
+        "bodily_injury_per_person": "N/A",
+        "bodily_injury_per_accident": "N/A",
+        "property_damage_per_accident": "N/A",
+        "medical_payments_per_person": "N/A"
+      },
+      "deductibles": {
+        "collision_deductible": "N/A",
+        "comprehensive_deductible": "N/A"
+      },
+      "key_exclusions": [],
+      "own_vehicle_damage_covered": true,
+      "notes": "Policy provides comprehensive coverage including collision, comprehensive, liability, medical payments, uninsured motorist, and specialized commercial coverages such as hired/non-owned auto. No explicit limit or deductible amounts stated. Roadside assistance and towing not mentioned.",
+      "status": "success",
+      "raw_policy_text_length": 2428,
+      "timestamp": "2026-09-07T14:23:55.298092"
+    },
+    "full_validation_result": {
+      "coverage_decision": "PARTIAL_COVERAGE",
+      "policy_type": "Commercial Auto Insurance Policy",
+      "policy_number": "COMM-AUTO-001",
+      "applicable_coverage": "Own Vehicle Collision Coverage",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The claim involves collision damage caused by a rear-end impact to the policyholder's own 2011 Subaru Outback, which is specifically covered under the policy's own vehicle collision coverage. The policy explicitly covers own vehicle collision and comprehensive damages. However, towing costs are requested, but the policy does not provide coverage for towing (covers_towing: false). There are no stated deductibles or coverage limits, so it is uncertain if the damage or repair costs exceed any internal policy limits. No exclusions such as commercial use restrictions, racing, DUI, or intentional damage are triggered. Therefore, collision repairs are covered, but towing cost reimbursement is denied.",
+      "exclusions_checked": [
+        "Roadside assistance and towing exclusion",
+        "No exclusions for commercial use or DUI",
+        "No racing or intentional damage noted"
+      ],
+      "exclusions_triggered": [
+        "Towing costs not covered"
+      ],
+      "recommendations": "Approve repair costs related to collision damage. Deny towing cost reimbursement. Confirm if any undisclosed deductibles or coverage limits apply internally. Claim adjuster should verify extent of mechanical/suspension damage and coordinate supplemental estimates if needed. Advise claimant of towing cost denial and suggest alternative towing coverage options for future.",
+      "confidence": "high",
+      "status": "success",
+      "timestamp": "2026-09-07T14:23:59.356242",
+      "claim_summary": {
+        "policy_number": "COMM-AUTO-001",
+        "policy_holder_name": "Andrea M. Bennett",
+        "vehicle_year_make_model": "2011 Subaru Outback",
+        "vehicle_color": "Red",
+        "vehicle_vin": "4S4BRBCC2B3378210",
+        "incident_date": "July 19, 2025",
+        "incident_time": "11:15 AM",
+        "incident_location": "6400 Westbrook Road, Dayton, OH 45415",
+        "incident_description": "Driving westbound on Westbrook Road, waiting in line with traffic for stop sign. Vehicle was rear-ended by blue sedan at moderate speed. Impact pushed vehicle into adjacent lane and forced front end into left lane's shoulder. Other driver remained at scene and called local authorities.",
+        "damage_description": "Severe crumpling and structural damage to rear bumper and rear quarter panel; rear driver's side taillight broken and assembly displaced; rear hatch door bent and misaligned, unable to close properly; noticeable damage and scraping to rear fender and left rear wheel well; suspension may be compromised; rear wheel does not track properly; minor paint scrapes and denting along driver's side; trunk contents disturbed, possible interior damage",
+        "claim_request": "Assessment and coverage for all rear-end bodywork and mechanical repairs, plus reimbursement for towing costs",
+        "weather_conditions": "Clear, dry roads"
+      }
+    },
+    "workflow_timestamp": "2026-09-07T14:23:59.356974"
+  },
+  {
+    "claim_file": "crash5_structured.json",
+    "policy_match": {
+      "policy_number": "COMM-AUTO-001",
+      "policy_name": "Commercial Auto Insurance Policy",
+      "policy_type": "commercial",
+      "match_confidence": "high"
+    },
+    "coverage_determination": {
+      "decision": "PARTIAL_COVERAGE",
+      "applicable_coverage": "Own vehicle collision coverage",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The claim involves collision damage to the policyholder's own vehicle and the policy explicitly covers own vehicle collision damage. The damage described (extensive body, suspension, and undercarriage damage) is consistent with a collision claim, which is covered under the policy\u2019s own vehicle collision coverage. However, the policy does not provide explicit information regarding deductible amounts or specific coverage limits for collision or towing. Additionally, towing coverage is not included in this policy, so reimbursement for towing costs is not covered. Hence, the claim is approved for vehicle damage repairs under collision coverage but towing expenses must be denied. Due to the absence of specified limits and deductibles, there is a degree of uncertainty whether the entire repair costs will be covered fully or partially.",
+      "exclusions_triggered": [
+        "towing coverage"
+      ],
+      "recommendations": "Approve the claim for collision damage repair cost coverage. Deny reimbursement for towing costs as this policy lacks towing coverage. Confirm with policyholder or insurer regarding deductible and collision coverage limits to clarify possible out-of-pocket expenses. Advise claimant to keep receipts and repair estimates for final adjustment."
+    },
+    "full_policy_result": {
+      "policy_match": {
+        "policy_number": "COMM-AUTO-001",
+        "policy_name": "Commercial Auto Insurance Policy",
+        "policy_type": "commercial",
+        "match_confidence": "high"
+      },
+      "coverage_summary": {
+        "covers_own_vehicle_collision": true,
+        "covers_own_vehicle_comprehensive": true,
+        "covers_liability_bodily_injury": true,
+        "covers_liability_property_damage": true,
+        "covers_medical_payments": true,
+        "covers_uninsured_motorist": true,
+        "covers_rental_car": true,
+        "covers_roadside_assistance": false,
+        "covers_towing": false
+      },
+      "limits": {
+        "collision_limit": "N/A",
+        "comprehensive_limit": "N/A",
+        "bodily_injury_per_person": "N/A",
+        "bodily_injury_per_accident": "N/A",
+        "property_damage_per_accident": "N/A",
+        "medical_payments_per_person": "N/A"
+      },
+      "deductibles": {
+        "collision_deductible": "N/A",
+        "comprehensive_deductible": "N/A"
+      },
+      "key_exclusions": [],
+      "own_vehicle_damage_covered": true,
+      "notes": "Policy clearly indicates coverage for collision, comprehensive, liability (bodily injury and property damage), medical payments, uninsured motorist, rental and non-owned vehicles. Limits and deductibles not specified in the provided document. Roadside assistance and towing coverage not mentioned.",
+      "status": "success",
+      "raw_policy_text_length": 2428,
+      "timestamp": "2026-09-07T14:24:05.547177"
+    },
+    "full_validation_result": {
+      "coverage_decision": "PARTIAL_COVERAGE",
+      "policy_type": "Commercial Auto Insurance Policy",
+      "policy_number": "COMM-AUTO-001",
+      "applicable_coverage": "Own vehicle collision coverage",
+      "deductible": "N/A",
+      "coverage_limit": "N/A",
+      "reasoning": "The claim involves collision damage to the policyholder's own vehicle and the policy explicitly covers own vehicle collision damage. The damage described (extensive body, suspension, and undercarriage damage) is consistent with a collision claim, which is covered under the policy\u2019s own vehicle collision coverage. However, the policy does not provide explicit information regarding deductible amounts or specific coverage limits for collision or towing. Additionally, towing coverage is not included in this policy, so reimbursement for towing costs is not covered. Hence, the claim is approved for vehicle damage repairs under collision coverage but towing expenses must be denied. Due to the absence of specified limits and deductibles, there is a degree of uncertainty whether the entire repair costs will be covered fully or partially.",
+      "exclusions_checked": [
+        "roadside assistance",
+        "towing coverage",
+        "commercial use exclusions",
+        "racing, DUI, intentional damage"
+      ],
+      "exclusions_triggered": [
+        "towing coverage"
+      ],
+      "recommendations": "Approve the claim for collision damage repair cost coverage. Deny reimbursement for towing costs as this policy lacks towing coverage. Confirm with policyholder or insurer regarding deductible and collision coverage limits to clarify possible out-of-pocket expenses. Advise claimant to keep receipts and repair estimates for final adjustment.",
+      "confidence": "high",
+      "status": "success",
+      "timestamp": "2026-09-07T14:24:10.724548",
+      "claim_summary": {
+        "policy_number": "COMM-AUTO-001",
+        "policy_holder_name": "Christopher J. Ryan",
+        "vehicle_year_make_model": "2016 Toyota Corolla",
+        "vehicle_color": "Black",
+        "vehicle_vin": "2T1BURHE1GC123905",
+        "incident_date": "July 19, 2025",
+        "incident_time": "2:50 PM",
+        "incident_location": "Intersection of Karl Road & Bethel Road, Columbus, OH 43214",
+        "incident_description": "Driving eastbound on Bethel Road, entered intersection at Karl Road. Gray pickup truck traveling northbound failed to yield while making left turn and struck rear driver's side of vehicle. Force of impact spun car, causing extensive damage to left rear panel and bumper. Other driver remained at scene and called local police.",
+        "damage_description": "Severe crumpling and denting of left rear quarter panel and bumper; rear driver's side taillight shattered; rear door and trunk slightly misaligned, trunk latch affected; rear wheel on driver's side bent, suspected axle damage; scrapes and paint transfer along left side; possible undercarriage and suspension issues; vehicle not safe to drive, towed from scene",
+        "claim_request": "Full assessment and coverage for all necessary body, mechanical, and suspension repairs, plus reimbursement for towing costs",
+        "weather_conditions": "Clear, dry pavement"
+      }
+    },
+    "workflow_timestamp": "2026-09-07T14:24:10.725222"
+  }
+]
